@@ -13,25 +13,9 @@ type Data =
       message: string;
     };
 
-const tempFaker = (): Transaction[] => {
-  return Array.from({ length: 1000 }, () => ({
-    id: "someID",
-    createdAt: "createdAtDate",
-    updatedAt: "updatedAt",
-    executionDate: "executionDate",
-    cardNumber: "1234",
-    cardExpirationDate: "12/25",
-    cardType: "visa",
-    amount: 1234,
-    isDomestic: true,
-    payer: {} as Transaction["payer"],
-    beneficiary: {} as Transaction["beneficiary"],
-  }));
-};
-
 async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
-    const data = tempFaker(); //await getFakeData(Number(req.query.quantity));
+    const data = await getFakeData(Number(req.query.quantity));
 
     res.status(200).json({ message: "Success", data });
   } catch (error: unknown) {

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { cacheManager } from "@/utils/cache";
 import { Transaction } from "@/types";
+import { CACHE_KEYS } from "@/enums";
 
 export const useTransactionsApi = (url: string, retries = 3) => {
   const [data, setData] = useState<Transaction[]>([]);
@@ -11,10 +13,19 @@ export const useTransactionsApi = (url: string, retries = 3) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        const cachedTransactionData = cacheManager.get<Transaction[]>(
+          CACHE_KEYS.TRANSACTION_DATA
+        );
+        if (cachedTransactionData) {
+          setData(cachedTransactionData);
+          return;
+        }
+
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const json = await response.json();
         if (json.data) {
+          cacheManager.set<Transaction[]>(CACHE_KEYS.TRANSACTION_DATA, json.data);
           setData(json.data);
         } else {
           throw new Error("No data returned from the API");

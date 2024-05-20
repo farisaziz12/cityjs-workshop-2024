@@ -1,6 +1,6 @@
-# Lab 2: Request Optimization - Part One
+# Lab 2: Request Optimization - Part Two
 
-In this lab, you'll focus on optimizing requests to improve the performance of the web application. The goal is to reduce stress on the third-party API and enhance overall efficiency. This is the first part of a multi-step process aimed at achieving optimal request handling within the application.
+In this lab, you'll focus on further optimizing requests to improve the performance of the web application. The goal is to reduce redundant value caching and state memory consumption.
 
 ## Instructions
 
