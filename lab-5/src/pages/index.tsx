@@ -24,14 +24,16 @@ function formatDollarPrice(amount: string) {
   }).format(Number(amount));
 }
 
+const QUANTITY = 1;
+
 export default function Home() {
-  const { data, isLoading, error, refetch } = useQuery<{
+  const { data, isFetching, error, refetch } = useQuery<{
     message: string;
     data: TransactionDashboardData;
   }>({
-    queryKey: ["transactions"],
+    queryKey: ["transactions", QUANTITY],
     queryFn: async () => {
-      const response = await fetch("/api/proxy/transactions?quantity=1");
+      const response = await fetch(`/api/proxy/transactions?quantity=${QUANTITY}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -77,31 +79,28 @@ export default function Home() {
           Dashboard
         </Title>
 
-        <Button onClick={refetch} color="green">
+        <Button onClick={() => refetch()} color="green">
           Refresh
         </Button>
       </div>
 
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-        {isLoading ? (
+        {isFetching ? (
           <Skeleton height={PRIMARY_COL_HEIGHT} radius="md" animate />
         ) : (
           <StatsCollection
-            data={
-              results &&
-              Object.entries(results?.amountsByCardType)
-                .slice(0, 3)
-                .map(([cardType, amount]) => ({
-                  label: cardType,
-                  value: formatDollarPrice(String(amount)),
-                  icon: IconCreditCard,
-                }))
-            }
+            data={Object.entries(results?.amountsByCardType ?? {})
+              .slice(0, 3)
+              .map(([cardType, amount]) => ({
+                label: cardType,
+                value: formatDollarPrice(String(amount)),
+                icon: IconCreditCard,
+              }))}
           />
         )}
         <Grid gutter="md">
           <Grid.Col>
-            {isLoading ? (
+            {isFetching ? (
               <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate />
             ) : (
               <StatsRing
@@ -115,14 +114,14 @@ export default function Home() {
                   },
                   {
                     label: "Domestic Transactions",
-                    stats: String(results.domesticCount),
+                    stats: String(results?.domesticCount),
                     progress: 72,
                     color: "blue",
                     icon: "up",
                   },
                   {
                     label: "Int. Transactions",
-                    stats: String(results.internationalCount),
+                    stats: String(results?.internationalCount),
                     progress: 52,
                     color: "red",
                     icon: "down",
@@ -132,18 +131,18 @@ export default function Home() {
             )}
           </Grid.Col>
           <Grid.Col span={6}>
-            {isLoading ? (
+            {isFetching ? (
               <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate />
             ) : (
               <StatsTrend
                 title="Revenue"
-                value={formatDollarPrice(String(results.totalAmount))}
+                value={formatDollarPrice(String(results?.totalAmount))}
                 diff={Math.round(Math.random() * 100)}
               />
             )}
           </Grid.Col>
           <Grid.Col span={6}>
-            {isLoading ? (
+            {isFetching ? (
               <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate />
             ) : (
               <StatsTrend

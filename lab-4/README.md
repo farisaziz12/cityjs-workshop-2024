@@ -1,27 +1,12 @@
-# Lab 2: Request Optimization - Part Two
+# Overview
 
-In this lab, you'll focus on further optimizing requests to improve the performance of the web application. The goal is to reduce redundant value caching and state memory consumption.
+### Throughout the previous labs, we focused on:
 
-## Instructions
+	1.	Handling Unpredictable APIs: Improving the resilience of the application to gracefully handle intermittent API failures.
+	2.	Request Optimization - Part One: Implementing caching mechanisms to reduce the load on third-party APIs and improve data retrieval efficiency.
+	3.	Network Optimization - Reducing Payload Size and LocalStorage Usage: Reducing payload sizes and optimizing local storage to improve load times and overall application performance.
 
-### 1. Analyze Current Behavior
 
-Start by understanding the current behavior of the application:
-
-- Review the code in `pages/index.tsx` to identify how data is fetched from the third-party API on each page refresh.
-- Consider the implications of frequent API requests, including potential slowdowns and increased server load.
-
-### 2. Implement Caching Mechanism
-
-To reduce the number of requests to the third-party API and improve performance, implement a caching mechanism:
-
-- Determine an appropriate caching strategy, considering factors such as data freshness requirements and cache expiration policies.
-- Introduce client-side caching using techniques such as local storage or session storage to store fetched data.
-- Modify the application logic to first check the cache for the required data before making a request to the API.
-
-### 3. Update Fetching Logic
-
-Revise the data fetching logic to leverage the caching mechanism:
-
-- Modify the code to prioritize fetching data from the cache if it exists and meets the freshness criteria.
-- Implement background refreshing of cached data to ensure that the application remains up-to-date while minimizing user wait time.
+## Tools
+- Payload Size: https://gist.github.com/farisaziz12/edbb738796b2c03274453b463592c4b6
+- Parsing Performance: https://gist.github.com/farisaziz12/f6076033ea483455e7e5e7b316136a44

@@ -10,13 +10,13 @@ type Stat = {
 };
 
 type Props = {
-  data: Stat[];
+  data?: Stat[];
 };
 
 export function StatsCollection({ data }: Props) {
   const date = new Date();
 
-  const stats = data.map((stat) => (
+  const stats = data?.map((stat) => (
     <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={stat.label}>
       <stat.icon
         style={{ width: rem(32), height: rem(32) }}

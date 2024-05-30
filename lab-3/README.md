@@ -1,27 +1,36 @@
-# Lab 2: Request Optimization - Part Two
+# Lab 3: Network Optimization - Reducing Payload Size and LocalStorage Usage
 
-In this lab, you'll focus on further optimizing requests to improve the performance of the web application. The goal is to reduce redundant value caching and state memory consumption.
+In this lab, you'll enhance the performance of the web application by reducing payload sizes and optimizing local storage usage. The objective is to minimize data redundancy and improve overall application efficiency.
+
+## Why This Matters
+
+Reducing payload size and optimizing local storage helps in:
+
+- **Faster Load Times:** Smaller payloads mean quicker data transfers, resulting in faster page loads.
+- **Efficient Storage Utilization:** Prevents local storage from being filled with redundant data, ensuring more space for other critical data.
+- **Improved User Experience:** Reduces waiting time for users, providing a smoother and more responsive application.
+
+## Technical Considerations
+
+### Local Storage Limits
+
+- **Storage Capacity:** Most browsers limit local storage to around 5-10 MB per domain.
+- **Performance Impact:** Storing large JSON strings increases the time required to parse and retrieve data, leading to slower application performance. Parsing large JSON objects can take several milliseconds, which adds up as payload size increases.
+
+### JSON Parsing Time
+
+- **Payload Size:** Larger JSON payloads take more time to parse, which can delay the rendering process. A JSON payload of 1 MB can take around 10-20 milliseconds to parse in a typical browser environment.
+
+### State Redundancy and React Performance
+
+- **Memory Consumption:** Storing redundant values in the state increases memory usage unnecessarily.
+- **Render Calculation:** Increased state size leads to more complex calculations during re-renders, slowing down the application.
 
 ## Instructions
 
-### 1. Analyze Current Behavior
 
-Start by understanding the current behavior of the application:
+### 1. Implement Payload Reduction Techniques
 
-- Review the code in `pages/index.tsx` to identify how data is fetched from the third-party API on each page refresh.
-- Consider the implications of frequent API requests, including potential slowdowns and increased server load.
+To reduce payload sizes and improve performance:
 
-### 2. Implement Caching Mechanism
-
-To reduce the number of requests to the third-party API and improve performance, implement a caching mechanism:
-
-- Determine an appropriate caching strategy, considering factors such as data freshness requirements and cache expiration policies.
-- Introduce client-side caching using techniques such as local storage or session storage to store fetched data.
-- Modify the application logic to first check the cache for the required data before making a request to the API.
-
-### 3. Update Fetching Logic
-
-Revise the data fetching logic to leverage the caching mechanism:
-
-- Modify the code to prioritize fetching data from the cache if it exists and meets the freshness criteria.
-- Implement background refreshing of cached data to ensure that the application remains up-to-date while minimizing user wait time.
+- **Optimize Data Fetching:** Fetch only the necessary data fields instead of the entire dataset.
