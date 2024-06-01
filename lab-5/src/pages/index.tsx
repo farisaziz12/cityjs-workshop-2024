@@ -32,6 +32,7 @@ export default function Home() {
     data: TransactionDashboardData;
   }>({
     queryKey: ["transactions", QUANTITY],
+    retry: 10,
     queryFn: async () => {
       const response = await fetch(`/api/proxy/transactions?quantity=${QUANTITY}`);
 
