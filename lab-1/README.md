@@ -26,7 +26,3 @@ Once the development server is running, open [http://localhost:3000](http://loca
 ### 2. Analyze the Code
 
 Take some time to review the code in `pages/index.tsx`. Pay attention to how transaction data is fetched from the API endpoint `/api/transactions`.
-
-### 3. Enhance Resilience
-
-Your primary goal is to modify the application code to handle API request failures gracefully. When recovery is not possible, the application should display the existing error message to the user.

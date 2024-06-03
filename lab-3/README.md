@@ -19,18 +19,9 @@ Reducing payload size and optimizing local storage helps in:
 
 ### JSON Parsing Time
 
-- **Payload Size:** Larger JSON payloads take more time to parse, which can delay the rendering process. A JSON payload of 1 MB can take around 10-20 milliseconds to parse in a typical browser environment.
+- **Payload Size:** Larger JSON payloads take more time to parse, which can delay the rendering process.
 
 ### State Redundancy and React Performance
 
 - **Memory Consumption:** Storing redundant values in the state increases memory usage unnecessarily.
 - **Render Calculation:** Increased state size leads to more complex calculations during re-renders, slowing down the application.
-
-## Instructions
-
-
-### 1. Implement Payload Reduction Techniques
-
-To reduce payload sizes and improve performance:
-
-- **Optimize Data Fetching:** Fetch only the necessary data fields instead of the entire dataset.
