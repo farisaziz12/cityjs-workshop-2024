@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 10;
 let retryCount = 0;
 let resetTimeout: NodeJS.Timeout | null = null;
 

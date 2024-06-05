@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -13,6 +12,7 @@ import { StatsCollection, StatsRing, StatsTrend } from "@/components";
 import { IconCreditCard } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { TransactionDashboardData } from "@/types";
+import { apiFetcher } from "@/utils/fetcher";
 
 const PRIMARY_COL_HEIGHT = rem(300);
 const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
@@ -31,17 +31,15 @@ export default function Home() {
     message: string;
     data: TransactionDashboardData;
   }>({
+    staleTime: 60_000,
     queryKey: ["transactions", QUANTITY],
     retryDelay: (attemptIndex) => 1000 * attemptIndex,
     retry: 10,
     queryFn: async () => {
-      const response = await fetch(`/api/proxy/transactions?quantity=${QUANTITY}`);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      return await response.json();
+      return await apiFetcher({
+        url: `/api/proxy/transactions?quantity=${QUANTITY}`,
+        errorTag: "GetTransactionsError",
+      });
     },
   });
 
@@ -139,7 +137,7 @@ export default function Home() {
               <StatsTrend
                 title="Revenue"
                 value={formatDollarPrice(String(results?.totalAmount))}
-                diff={Math.round(Math.random() * 100)}
+                diff={5}
               />
             )}
           </Grid.Col>
@@ -147,11 +145,7 @@ export default function Home() {
             {isFetching ? (
               <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate />
             ) : (
-              <StatsTrend
-                title="Test"
-                value="$13,456"
-                diff={Math.round(Math.random() * -100)}
-              />
+              <StatsTrend title="Test" value="$13,456" diff={-10} />
             )}
           </Grid.Col>
         </Grid>

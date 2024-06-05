@@ -1,4 +1,4 @@
-import { useState, memo, FC } from "react";
+import React, { useState, memo, FC } from "react";
 
 const TestComponent: FC<{ isToggled: boolean }> = memo(
   ({ isToggled }) => {
@@ -21,7 +21,7 @@ export default function Home() {
   });
 
   const toggleState = () => {
-    setState((prevState) => ({
+    setState(() => ({
       isToggled: true,
       form: {
         email: "",

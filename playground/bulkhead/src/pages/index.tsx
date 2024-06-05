@@ -23,15 +23,8 @@ export default function Home() {
   return (
     <>
       <div>
-        <h1>Without Error Boundary</h1>
         <TestComponent isToggled={isToggled} />
       </div>
-      {/* <div>
-        <h1>With Error Boundary</h1>
-        <ErrorBoundary>
-          <TestComponent isToggled={isToggled} />
-        </ErrorBoundary>
-      </div> */}
       <button onClick={toggleState}>Toggle State</button>
     </>
   );
